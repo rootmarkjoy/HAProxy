@@ -21,7 +21,8 @@ The other two servers would act as the backend servers. For this, we’ll set up
 
 We chose Apache because it’s perhaps the most widely used web server today. It is open source and has been a popular choice for setting up servers for web apps.
 
-On App servers 1 & 2, use the following commands to install Apache:
+
+# Now on App servers 1 & 2, use the following commands to install Apache:
 
 
 ## App Server 1 & 2
