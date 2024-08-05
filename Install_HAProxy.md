@@ -13,6 +13,7 @@ Once the installation finishes, start the HAProxy service with the following com
 systemctl start haproxy
 systemctl enable haproxy
 systemctl status haproxy
+chkconfig haproxy on
 ```
 
 Now we will make sure we are allowing the HAProxy service to run through our firewall. The first command will enable the http server in the firewall.
@@ -99,4 +100,35 @@ backend web-servers
         server app1 192.168.1.11:80 check
         server app2 192.168.1.12:80 check
 ```
+
+Save the file and restart the HAProxy service to ensure the new rules are loaded and in use.
+
+```sh
+systemctl restart haproxy
+```
+You should note that you can use other custom ports instead of the default ports 80 and 443. Another essential fact to remember is that the default algorithm is Round Robin.
+
+Also, note that the check option (at the end of the server directives) forces health checks before the backend server is used.
+
+## HAProxy Status Dashboard
+
+HAProxy also offers a dashboard called the HAProxy Status page. Here, you can see the essential metrics that present server health, current request rates, response times, and more.
+
+You must enable a directive in the HAproxy configuration file to add a metric. For instance, in the following screenshot, you can see that you need to provide credentials to access the Status page. The authentication directive we added to the HAProxy config file requires users to enter credentials before accessing the page.
+
+```sh
+http://192.168.1.3/stats
+```
+
+For HAProxy dashboard we have added rule on file: haproxy.cfg.
+
+```sh
+stats enable
+stats auth admin:123
+stats uri /stats
+stats refresh 10s
+stats admin if LOCALHOST
+```
+
+Once you provide the proper credentials, you can access the HAProxy Status page to access vital statistics about the load balancer.
 
